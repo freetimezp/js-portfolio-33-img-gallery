@@ -3,3 +3,71 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --index: calc(1vw + 1vh);
+}
+
+body {
+    background-color: #141414;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.items {
+    display: flex;
+    gap: 0.7rem;
+    perspective: 700px;
+}
+
+.item {
+    background-color: #222;
+    width: calc(var(--index) * 3);
+    height: calc(var(--index) * 10);
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+.items .item.hover {
+    transform: translateZ(calc(var(--index) * 10));
+}
+/* select next el */
+.items .item.hover + * {
+    transform: translateZ(calc(var(--index) * 8.5)) rotateY(35deg);
+    z-index: -1;
+}
+.items .item.hover + * + * {
+    transform: translateZ(calc(var(--index) * 5.6)) rotateY(40deg);
+    z-index: -2;
+}
+.items .item.hover + * + * + * {
+    transform: translateZ(calc(var(--index) * 2.4)) rotateY(34deg);
+    z-index: -3;
+}
+.items .item.hover + * + * + * + * {
+    transform: translateZ(calc(var(--index) * 0.6)) rotateY(14deg);
+    z-index: -4;
+}
+/* select prev el */
+.item:has(+ .hover) {
+    transform: translateZ(calc(var(--index) * 8.5)) rotateY(-35deg);
+    z-index: -1;
+}
+.item:has(+ * + .hover) {
+    transform: translateZ(calc(var(--index) * 5.6)) rotateY(-40deg);
+    z-index: -1;
+}
+.item:has(+ * + * + .hover) {
+    transform: translateZ(calc(var(--index) * 2.4)) rotateY(-34deg);
+    z-index: -3;
+}
+.item:has(+ * + * + * + .hover) {
+    transform: translateZ(calc(var(--index) * 0.6)) rotateY(-14deg);
+    z-index: -4;
+}
