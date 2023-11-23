@@ -6,6 +6,7 @@
 
 :root {
     --index: calc(1vw + 1vh);
+    --transition: cubic-bezier(.1, .7, 0, 1);
 }
 
 body {
@@ -21,8 +22,8 @@ body {
 
 .items {
     display: flex;
-    gap: 0.7rem;
-    perspective: 700px;
+    gap: 0.4rem;
+    perspective: calc(var(--index) * 35);
 }
 
 .item {
@@ -32,42 +33,64 @@ body {
     background-size: cover;
     background-position: center;
     cursor: pointer;
+    transition: transform 1.25s var(--transition), filter 3s var(--transition);
+    will-change: transform;
+    filter: grayscale() brightness(.5);
+}
+.item::after, .item::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    right: calc(var(--index) * -1);
+}
+.item::after {
+    left: calc(var(--index) * -1);
 }
 
-.items .item.hover {
+.items .item:hover {
     transform: translateZ(calc(var(--index) * 10));
+    filter: inherit;
 }
 /* select next el */
-.items .item.hover + * {
+.items .item:hover + * {
     transform: translateZ(calc(var(--index) * 8.5)) rotateY(35deg);
     z-index: -1;
+    filter: inherit;
 }
-.items .item.hover + * + * {
+.items .item:hover + * + * {
     transform: translateZ(calc(var(--index) * 5.6)) rotateY(40deg);
     z-index: -2;
+    filter: inherit;
 }
-.items .item.hover + * + * + * {
+.items .item:hover + * + * + * {
     transform: translateZ(calc(var(--index) * 2.4)) rotateY(34deg);
     z-index: -3;
+    filter: inherit;
 }
-.items .item.hover + * + * + * + * {
+.items .item:hover + * + * + * + * {
     transform: translateZ(calc(var(--index) * 0.6)) rotateY(14deg);
     z-index: -4;
+    filter: inherit;
 }
 /* select prev el */
-.item:has(+ .hover) {
+.item:has(+ :hover) {
     transform: translateZ(calc(var(--index) * 8.5)) rotateY(-35deg);
     z-index: -1;
+    filter: inherit;
 }
-.item:has(+ * + .hover) {
+.item:has(+ * + :hover) {
     transform: translateZ(calc(var(--index) * 5.6)) rotateY(-40deg);
-    z-index: -1;
+    z-index: -2;
+    filter: inherit;
 }
-.item:has(+ * + * + .hover) {
+.item:has(+ * + * + :hover) {
     transform: translateZ(calc(var(--index) * 2.4)) rotateY(-34deg);
     z-index: -3;
+    filter: inherit;
 }
-.item:has(+ * + * + * + .hover) {
+.item:has(+ * + * + * + :hover) {
     transform: translateZ(calc(var(--index) * 0.6)) rotateY(-14deg);
     z-index: -4;
+    filter: inherit;
 }
